@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Konwerter godzin na minuty</title>
+    <style>
+        .container {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #wynik {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-group">
+            <label for="godziny">Podaj liczbę godzin:</label>
+            <input type="number" id="godziny" min="0">
+        </div>
+        <button onclick="konwertujNaMinuty()">Konwertuj na minuty</button>
+        <button onclick="konwertujNaGodziny()">Konwertuj na godziny</button>
+        <div id="wynik"></div>
+    </div>
+
+    <script>
+        function konwertujNaMinuty() {
+            const godziny = document.getElementById('godziny').value;
+            const minuty = godziny * 60;
+            document.getElementById('wynik').textContent = 
+                `${godziny} godzin to ${minuty} minut`;
+        }
+
+        function konwertujNaGodziny() {
+            const minuty = document.getElementById('godziny').value;
+            const godziny = (minuty / 60).toFixed(2);
+            document.getElementById('wynik').textContent = 
+                `${minuty} minut to ${godziny} godzin`;
+        }
+    </script>
+</body>
+</html>

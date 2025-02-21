@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Symulator Lotto</title>
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        input {
+            width: 50px;
+            padding: 5px;
+            margin-right: 5px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Symulator Lotto</h2>
+        <div class="form-group">
+            <label>Podaj 6 różnych liczb (1-49):</label><br>
+            <input type="number" id="num1" min="1" max="49">
+            <input type="number" id="num2" min="1" max="49">
+            <input type="number" id="num3" min="1" max="49">
+            <input type="number" id="num4" min="1" max="49">
+            <input type="number" id="num5" min="1" max="49">
+            <input type="number" id="num6" min="1" max="49">
+        </div>
+        <button onclick="playLotto()">Zagraj</button>
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        function playLotto() {
+            // Pobranie liczb od użytkownika
+            const userNumbers = new Set();
+            for(let i = 1; i <= 6; i++) {
+                const num = parseInt(document.getElementById(`num${i}`).value);
+                userNumbers.add(num);
+            }
+
+            // Walidacja wprowadzonych danych
+            if(userNumbers.size !== 6) {
+                alert("Musisz podać 6 różnych liczb!");
+                return;
+            }
+
+            for(let num of userNumbers) {
+                if(num < 1 || num > 49 || isNaN(num)) {
+                    alert("Liczby muszą być z zakresu 1-49!");
+                    return;
+                }
+            }
+
+            // Losowanie liczb
+            const drawnNumbers = new Set();
+            while(drawnNumbers.size < 6) {
+                drawnNumbers.add(Math.floor(Math.random() * 49) + 1);
+            }
+
+            // Sprawdzenie trafień
+            const hits = new Set([...userNumbers].filter(x => drawnNumbers.has(x)));
+
+            // Określenie wygranej
+            let prize = "";
+            switch(hits.size) {
+                case 6: prize = "Główna wygrana!"; break;
+                case 5: prize = "Druga nagroda!"; break;
+                case 4: prize = "Trzecia nagroda!"; break;
+                case 3: prize = "Czwarta nagroda!"; break;
+                default: prize = "Tym razem się nie udało.";
+            }
+
+            // Wyświetlenie wyników
+            document.getElementById('result').innerHTML = `
+                Twoje liczby: ${[...userNumbers].sort((a,b) => a-b).join(', ')}<br>
+                Wylosowane liczby: ${[...drawnNumbers].sort((a,b) => a-b).join(', ')}<br>
+                Liczba trafień: ${hits.size}<br>
+                Trafione liczby: ${hits.size > 0 ? [...hits].sort((a,b) => a-b).join(', ') : 'brak'}<br>
+                ${prize}
+            `;
+        }
+    </script>
+</body>
+</html>

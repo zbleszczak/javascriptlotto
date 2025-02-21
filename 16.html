@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Formularz pracownika</title>
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        #listaPracownikow {
+            margin-top: 20px;
+        }
+        .pracownik {
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form id="formPracownik" onsubmit="dodajPracownika(event)">
+            <div class="form-group">
+                <label for="imie">Imię:</label>
+                <input type="text" id="imie" required>
+                
+                <label for="nazwisko">Nazwisko:</label>
+                <input type="text" id="nazwisko" required>
+                
+                <label for="stanowisko">Stanowisko:</label>
+                <input type="text" id="stanowisko" required>
+                
+                <label for="wynagrodzenie">Wynagrodzenie:</label>
+                <input type="number" id="wynagrodzenie" required min="0">
+            </div>
+            <button type="submit">Dodaj pracownika</button>
+        </form>
+        <div id="listaPracownikow"></div>
+    </div>
+
+    <script>
+        class Pracownik {
+            constructor(imie, nazwisko, stanowisko, wynagrodzenie) {
+                this.imie = imie;
+                this.nazwisko = nazwisko;
+                this.stanowisko = stanowisko;
+                this.wynagrodzenie = wynagrodzenie;
+            }
+        }
+
+        let pracownicy = [];
+
+        function dodajPracownika(event) {
+            event.preventDefault();
+            
+            const imie = document.getElementById('imie').value;
+            const nazwisko = document.getElementById('nazwisko').value;
+            const stanowisko = document.getElementById('stanowisko').value;
+            const wynagrodzenie = parseFloat(document.getElementById('wynagrodzenie').value);
+            
+            const pracownik = new Pracownik(imie, nazwisko, stanowisko, wynagrodzenie);
+            pracownicy.push(pracownik);
+            
+            wyswietlPracownikow();
+            document.getElementById('formPracownik').reset();
+        }
+
+        function wyswietlPracownikow() {
+            const lista = document.getElementById('listaPracownikow');
+            lista.innerHTML = '<h3>Lista pracowników:</h3>';
+            
+            pracownicy.forEach((pracownik, index) => {
+                const div = document.createElement('div');
+                div.className = 'pracownik';
+                div.innerHTML = `
+                    <strong>${index + 1}. ${pracownik.imie} ${pracownik.nazwisko}</strong><br>
+                    Stanowisko: ${pracownik.stanowisko}<br>
+                    Wynagrodzenie: ${pracownik.wynagrodzenie} zł
+                `;
+                lista.appendChild(div);
+            });
+        }
+    </script>
+</body>
+</html>

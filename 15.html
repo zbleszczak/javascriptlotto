@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kalkulator operacji arytmetycznych</title>
+    <style>
+        .container {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #wynik {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-group">
+            <label for="liczba1">Pierwsza liczba:</label>
+            <input type="number" id="liczba1" step="any">
+            
+            <label for="operacja">Wybierz operację:</label>
+            <select id="operacja">
+                <option value="+">Dodawanie (+)</option>
+                <option value="-">Odejmowanie (-)</option>
+                <option value="*">Mnożenie (*)</option>
+                <option value="/">Dzielenie (/)</option>
+            </select>
+            
+            <label for="liczba2">Druga liczba:</label>
+            <input type="number" id="liczba2" step="any">
+        </div>
+        <button onclick="wykonajOperacje()">Oblicz</button>
+        <div id="wynik"></div>
+    </div>
+
+    <script>
+        function wykonajOperacje() {
+            const liczba1 = parseFloat(document.getElementById('liczba1').value);
+            const liczba2 = parseFloat(document.getElementById('liczba2').value);
+            const operacja = document.getElementById('operacja').value;
+            let wynik;
+            
+            switch(operacja) {
+                case '+':
+                    wynik = liczba1 + liczba2;
+                    break;
+                case '-':
+                    wynik = liczba1 - liczba2;
+                    break;
+                case '*':
+                    wynik = liczba1 * liczba2;
+                    break;
+                case '/':
+                    if(liczba2 === 0) {
+                        document.getElementById('wynik').textContent = 'Nie można dzielić przez zero!';
+                        return;
+                    }
+                    wynik = liczba1 / liczba2;
+                    break;
+            }
+            
+            document.getElementById('wynik').textContent = 
+                `Wynik: ${liczba1} ${operacja} ${liczba2} = ${wynik}`;
+        }
+    </script>
+</body>
+</html>

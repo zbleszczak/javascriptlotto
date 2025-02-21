@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wybór miesiąca</title>
+    <style>
+        .container {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #wynik {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-group">
+            <label for="miesiac">Podaj numer miesiąca (1-12):</label>
+            <input type="number" id="miesiac" min="1" max="12">
+        </div>
+        <button onclick="pokazMiesiac()">Pokaż nazwę miesiąca</button>
+        <div id="wynik"></div>
+    </div>
+
+    <script>
+        function pokazMiesiac() {
+            const miesiace = [
+                "Styczeń", "Luty", "Marzec", "Kwiecień", 
+                "Maj", "Czerwiec", "Lipiec", "Sierpień",
+                "Wrzesień", "Październik", "Listopad", "Grudzień"
+            ];
+            
+            const numer = parseInt(document.getElementById('miesiac').value);
+            if (numer >= 1 && numer <= 12) {
+                document.getElementById('wynik').textContent = 
+                    `Miesiąc ${numer} to ${miesiace[numer-1]}`;
+            } else {
+                document.getElementById('wynik').textContent = 
+                    "Podaj prawidłowy numer miesiąca (1-12)";
+            }
+        }
+    </script>
+</body>
+</html>

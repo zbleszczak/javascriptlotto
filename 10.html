@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kalkulator równania kwadratowego</title>
+    <style>
+        .container {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: inline-block;
+            width: 30px;
+        }
+        input {
+            width: 100px;
+            padding: 5px;
+            margin: 5px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #wynik {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Kalkulator równania kwadratowego ax² + bx + c = 0</h2>
+        <div class="form-group">
+            <label for="a">a:</label>
+            <input type="number" id="a" step="any" required>
+            
+            <label for="b">b:</label>
+            <input type="number" id="b" step="any" required>
+            
+            <label for="c">c:</label>
+            <input type="number" id="c" step="any" required>
+        </div>
+        <button onclick="obliczPierwiastki()">Oblicz</button>
+        <div id="wynik"></div>
+    </div>
+
+    <script>
+        function obliczPierwiastki() {
+            const a = parseFloat(document.getElementById('a').value);
+            const b = parseFloat(document.getElementById('b').value);
+            const c = parseFloat(document.getElementById('c').value);
+            
+            if (a === 0) {
+                document.getElementById('wynik').innerHTML = "To nie jest równanie kwadratowe (a = 0)";
+                return;
+            }
+
+            const delta = Math.pow(b, 2) - (4 * a * c);
+            let wynik = `Delta = ${delta}<br>`;
+
+            if (delta < 0) {
+                wynik += "Brak pierwiastków rzeczywistych";
+            } else if (delta === 0) {
+                const x = -b / (2 * a);
+                wynik += `Jeden pierwiastek: x = ${x}`;
+            } else {
+                const x1 = (-b - Math.sqrt(delta)) / (2 * a);
+                const x2 = (-b + Math.sqrt(delta)) / (2 * a);
+                wynik += `Dwa pierwiastki:<br>x₁ = ${x1}<br>x₂ = ${x2}`;
+            }
+
+            document.getElementById('wynik').innerHTML = wynik;
+        }
+    </script>
+</body>
+</html>
